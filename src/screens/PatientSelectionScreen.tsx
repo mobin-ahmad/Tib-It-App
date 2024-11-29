@@ -1,56 +1,55 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // for radio button and icons
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import appColors from '../components/appcolors';
+import { useDispatch } from 'react-redux';
+import { setSelectedPatient } from '../store/slices/patientsSlice';
 
-interface Patient {
-  id: number;
-  name: string;
-  mrn: string;
-  gender: string;
-}
+const { width } = Dimensions.get('window');
 
 const AllPatientsScreen = () => {
-  // Sample data for patients
-  const patients: Patient[] = [
-    { id: 1, name: 'John Smith', mrn: 'MR123456', gender: 'Male' },
-    { id: 2, name: 'Sophia', mrn: 'MR654321', gender: 'Female' },
-    { id: 3, name: 'John Smith', mrn: 'MR123456', gender: 'Male' },
-    { id: 4, name: 'Sophia', mrn: 'MR654321', gender: 'Female' },
-  ];
-
+  const navigation = useNavigation();
+  const patients = useSelector((state) => state.patients.list); // Access patients from Redux
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
+  const dispatch = useDispatch();
 
-  // Function to handle patient selection
-  const handleSelectPatient = (id: number) => {
-    setSelectedPatientId(id);
+  // const handleSelectPatient = (id) => {
+  //   setSelectedPatientId(id);
+  // };
+
+  const handleSelectPatient = (patient) => {
+    dispatch(setSelectedPatient(patient)); // Update Redux state
+    setSelectedPatientId(patient.patient_Id); // Update local state
   };
 
-  // Render individual patient card
-  const renderPatientCard = ({ item }: { item: Patient }) => {
-    const isSelected = selectedPatientId === item.id;
+  const handleVerify = () => {
+    navigation.navigate("tabs");
+    // Handle OTP verification here
+  
+  };
+
+  const renderPatientCard = ({ item }) => {
+    const isSelected = selectedPatientId === item.patient_Id;
     return (
       <TouchableOpacity
         style={[styles.card, isSelected && styles.selectedCard]}
-        onPress={() => handleSelectPatient(item.id)}>
+        onPress={() => handleSelectPatient(item)}
+      >
         <View style={styles.cardContent}>
-          <View style={styles.patientIconContainer}>
-            <Icon name="user-circle" size={40} color="#A33E39" />
+          <View style={styles.iconContainer}>
+            <Image
+              source={require('../assets/Vector.png')}
+              style={styles.profileIcon}
+            />
           </View>
           <View style={styles.patientInfo}>
-            <Text style={styles.patientName}>{item.name}</Text>
-            <Text style={styles.patientDetails}>{item.mrn}</Text>
-            <Text style={styles.patientDetails}>{item.gender}</Text>
+            <Text style={styles.patientName}>{item.patient_Name}</Text>
+            <Text style={styles.patientDetails}>{item.mR_Number}</Text>
+            <Text style={styles.patientDetails}>{item.gender === 'M' ? 'Male' : 'Female'}</Text>
           </View>
           <View style={styles.radioButtonContainer}>
-            <View
-              style={[styles.radioButton, isSelected && styles.radioSelected]}
-            />
+            <View style={[styles.radioButton, isSelected && styles.radioSelected]} />
           </View>
         </View>
       </TouchableOpacity>
@@ -59,29 +58,26 @@ const AllPatientsScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <Text style={styles.headerTitle}>All Patients</Text>
-      <Text style={styles.subHeader}>
-        "Kindly choose a patient from the list above."
-      </Text>
-
-      {/* FlatList to display all patients */}
+      <Text style={styles.subHeader}>Kindly choose a patient from the list below.</Text>
       <FlatList
         data={patients}
         renderItem={renderPatientCard}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.patient_Id.toString()}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
 
-      {/* Next Button */}
-      <TouchableOpacity
+<TouchableOpacity
         style={styles.nextButton}
-        onPress={() => console.log('Proceed with patient:', selectedPatientId)}>
+        onPress={handleVerify}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+// Include styles...
+// export default AllPatientsScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -90,11 +86,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   headerTitle: {
+    marginTop:30,
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#A33E39',
     marginBottom: 10,
+  },
+
+
+  profileIcon: {
+    width: 15,
+    height: 15,
+    borderRadius: 15,
+    alignSelf: 'center',
+    marginTop: 10,
+  },
+
+  iconContainer: {
+    width: width * 0.09,
+    height: 35,
+    marginHorizontal:12,
+    // marginVertical: ,
+    alignSelf: 'center',
+    borderRadius: 30,
+    overflow: 'hidden',
+    elevation: 3,
+    backgroundColor: appColors.jazzred,
   },
   subHeader: {
     fontSize: 14,
@@ -114,6 +132,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   cardContent: {
+    
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
@@ -156,7 +175,7 @@ const styles = StyleSheet.create({
     height: 10,
   },
   nextButton: {
-    backgroundColor: '#555555',
+    backgroundColor:  appColors.jazzred,
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -166,6 +185,19 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+
+
+
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#ccc',
   },
 });
 

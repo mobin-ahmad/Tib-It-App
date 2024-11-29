@@ -1,6 +1,7 @@
 // src/screens/SplashScreen.tsx
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import appColors from '../components/appcolors';
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFC107', // Background color (same as the provided image)
+    // backgroundColor: '#FFC107', // Background color (same as the provided image)
   },
   logo: {
     width: 250, // Adjust the size of the logo as needed
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height:100,
 
-    backgroundColor: '#464B4E66', // Color for bottom container
+    // backgroundColor: '#464B4E66', // Color for bottom container
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingVertical: 10,
@@ -74,13 +75,14 @@ const styles = StyleSheet.create({
   },
   poweredText: {
     fontSize: 15,
-    color: '#FFF', // White text for the "Powered by" label
+    fontWeight: 'bold',
+        color: appColors.Btnblack, // White text for the "Powered by" label
     marginRight: 0,
     marginLeft:50, // Add some space between the text and the logo
   },
   poweredLogo: {
-    width: 200, // Adjust the size of the powered logo
-    height: 80,
+    width: 120, // Adjust the size of the powered logo
+    height: 50,
     resizeMode: 'contain',
   },
 });

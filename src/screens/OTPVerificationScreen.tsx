@@ -1,23 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Image,
+  Alert,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+// import { useVerifyOTP } from '../hooks/apiHooks'; // Update the path as per your folder structure
+import appColors from '../components/appcolors';
+import { useVerifyOTP } from '../hooks/useAuth';
 
 const VerificationScreen = () => {
   const [timer, setTimer] = useState(40); // Timer for resend
   const [otp, setOtp] = useState(['', '', '', '']); // Array for 4 digits of OTP
-  const navigation = useNavigation();
+
+  const { mutate: verifyOtp, isLoading } = useVerifyOTP();
 
   // Countdown for resend timer
   useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => {
-        setTimer(prev => prev - 1);
+        setTimer((prev) => prev - 1);
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -25,14 +30,27 @@ const VerificationScreen = () => {
 
   const handleResendCode = () => {
     setTimer(40); // Reset the timer when resend is clicked
-    // Trigger resend code functionality here
+    // Add resend code logic here
+    Alert.alert('Code Resent', 'A new OTP code has been sent to your number.');
   };
 
   const handleVerify = () => {
-    navigation.navigate("AllPatientsScreen");
-    // Handle OTP verification here
     const otpCode = otp.join(''); // Concatenate the array into a single string
-    console.log('OTP entered:', otpCode);
+    if (otpCode.length < 4) {
+      Alert.alert('Error', 'Please enter the complete OTP.');
+      return;
+    }
+
+    // Call API to verify OTP
+    verifyOtp(otpCode, {
+      onSuccess: () => {
+        Alert.alert('Success', 'OTP Verified Successfully');
+      },
+      onError: (error) => {
+        Alert.alert('Error', 'Failed to verify OTP. Please try again.');
+        console.error(error);
+      },
+    });
   };
 
   // Handle OTP input changes
@@ -54,11 +72,21 @@ const VerificationScreen = () => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Verification</Text>
+        <TouchableOpacity style={styles.locationContainer}>
+          <Image
+            source={require('../assets/backarrow.png')}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>OTP Verification</Text>
+        <Image
+          source={require('../assets/Vector.png')}
+          style={styles.icon2}
+        />
       </View>
 
       {/* Verification Text */}
-      <Text style={styles.title}>Verification</Text>
+      <Text style={styles.title}>OTP Verification</Text>
       <Text style={styles.description}>
         We sent you a verification code to your phone number{' '}
         <Text style={styles.phoneNumber}>03******1</Text>.
@@ -69,7 +97,9 @@ const VerificationScreen = () => {
         {otp.map((digit, index) => (
           <TextInput
             key={index}
-            ref={(input) => { this[`otpInput${index}`] = input; }} // Assign refs to inputs for focus control
+            ref={(input) => {
+              this[`otpInput${index}`] = input;
+            }}
             style={styles.otpBox}
             keyboardType="number-pad"
             maxLength={1}
@@ -93,8 +123,14 @@ const VerificationScreen = () => {
       </View>
 
       {/* Verify Button */}
-      <TouchableOpacity style={styles.verifyButton} onPress={handleVerify}>
-        <Text style={styles.verifyButtonText}>Verify</Text>
+      <TouchableOpacity
+        style={styles.verifyButton}
+        onPress={handleVerify}
+        disabled={isLoading}
+      >
+        <Text style={styles.verifyButtonText}>
+          {isLoading ? 'Verifying...' : 'Verify'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -103,18 +139,24 @@ const VerificationScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#FFFFFF',
+  },
+  locationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    backgroundColor: appColors.jazzred,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#A33E39',
+    color: '#FFFFFF',
   },
   title: {
     fontSize: 24,
@@ -122,8 +164,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#A33E39',
     marginBottom: 10,
+    marginTop: 30,
   },
   description: {
+    paddingHorizontal: 20,
     fontSize: 16,
     textAlign: 'center',
     color: '#000',
@@ -134,6 +178,7 @@ const styles = StyleSheet.create({
     color: '#A33E39',
   },
   otpContainer: {
+    paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
@@ -152,6 +197,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
   },
+  icon: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+  },
+  icon2: {
+    width: 0,
+    height: 0,
+    marginRight: 5,
+  },
   resendText: {
     fontSize: 16,
     color: '#000',
@@ -165,9 +220,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   verifyButton: {
-    backgroundColor: '#555555',
-    paddingVertical: 15,
-    borderRadius: 10,
+    marginHorizontal: 20,
+    padding: 20,
+    backgroundColor: appColors.jazzred,
+    borderRadius: 8,
     alignItems: 'center',
   },
   verifyButtonText: {

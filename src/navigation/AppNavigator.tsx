@@ -9,6 +9,14 @@ import LoginScreen from '../screens/LoginScreen';
 import Tabs from './tab';
 import VerificationScreen from '../screens/OTPVerificationScreen';
 import AllPatientsScreen from '../screens/PatientSelectionScreen';
+import NotificationScreen from '../screens/NotificationScreen';
+import MedicalHistoryScreen from '../screens/MedicalHistoryScreen';
+import ReportScreen from '../screens/ReportsScreen';
+import AppointmentScreen from '../screens/BookAppointment';
+import SelectDateScreen from '../screens/selectDateScreen';
+import SelectDoctorScreen from '../screens/selectDoctorScreen';
+import DoctorAvailabilityScreen from '../screens/doctorAvailibiltyScreen';
+import AppointmentDetailScreen from '../screens/appointmentDetailScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +33,9 @@ const AppNavigator = () => {
         component={WelcomeScreen}
         options={{headerShown: false}}
       />
+
+
+      
       <Stack.Screen
         name="LocationTagging"
         component={LocationTaggingScreen}
@@ -57,6 +68,37 @@ const AppNavigator = () => {
         component={VerificationScreen} // Use MainNavigator as the main component
         options={{headerShown: false}} // Hide header for Main
       />
+
+<Stack.Screen
+        name="NotificationScreen" // Updated name for clarity
+        component={NotificationScreen} // Use MainNavigator as the main component
+        options={{headerShown: false}} // Hide header for Main
+      />
+
+<Stack.Screen
+        name="MedicalHistoryScreen" // Updated name for clarity
+        component={MedicalHistoryScreen} // Use MainNavigator as the main component
+        options={{headerShown: false}} // Hide header for Main
+      />
+<Stack.Screen
+        name="ReportScreen" // Updated name for clarity
+        component={ReportScreen} // Use MainNavigator as the main component
+        options={{headerShown: false}} // Hide header for Main
+      />
+<Stack.Screen
+        name="AppointmentScreen" // Updated name for clarity
+        component={AppointmentScreen} // Use MainNavigator as the main component
+        options={{headerShown: false}} // Hide header for Main
+      />
+
+
+<Stack.Screen name="SelectDateScreen" component={SelectDateScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SelectDoctor" component={SelectDoctorScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="DoctorAvailability" component={DoctorAvailabilityScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="AppointmentDetailScreen" component={AppointmentDetailScreen} options={{ headerShown: false }} />
+
+
+
 
     </Stack.Navigator>
   );

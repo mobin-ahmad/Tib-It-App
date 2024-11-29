@@ -9,6 +9,12 @@
 	<string>We need your location to provide services</string>
 
 
+<key>UISupportedInterfaceOrientations</key>
+<array>
+  <string>UIInterfaceOrientationPortrait</string>
+  <string>UIInterfaceOrientationPortraitUpsideDown</string>
+</array>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

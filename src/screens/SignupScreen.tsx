@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,137 +6,183 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ScrollView,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import CheckBox from '@react-native-community/checkbox'; // Install via npm
 import RadioForm from 'react-native-simple-radio-button'; // Install via npm
+import appColors from '../components/appcolors';
+import { useNavigation } from '@react-navigation/native';
 
 const SignupScreen = () => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [cnic, setCnic] = useState('');
+
+  const [DOB, setDOB] = useState('');
   const [gender, setGender] = useState(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const navigation = useNavigation();
 
   const radio_props = [
-    {label: 'Male', value: 'Male'},
-    {label: 'Female', value: 'Female'},
+    { label: 'Male', value: 'Male', },
+    { label: 'Female', value: 'Female' },
+    { label: 'Other', value: 'Other' },
+
   ];
 
   const handleSubmit = () => {
-    if (!name || !phoneNumber || !gender || !termsAccepted) {
-      Alert.alert(
-        'Error',
-        'Please fill all the required fields and accept the terms and conditions.',
-      );
-    } else {
-      Alert.alert('Success', 'Form submitted successfully');
-      // Further submit logic here
-    }
+    navigation.navigate("VerificationScreen");
+
+    
+    // if (!name || !phoneNumber || !gender || !termsAccepted) {
+    //   Alert.alert(
+    //     'Error',
+    //     'Please fill all the required fields and accept the terms and conditions.',
+    //   );
+    // } else {
+    //   Alert.alert('Success', 'Form submitted successfully');
+    //   // Further submit logic here
+    // }
+  };
+
+  const handleRegister = () => {
+    navigation.navigate("SignupScreen");
   };
 
   return (
-    <View style={styles.container}>
-      {/* Logo */}
-      <View style={styles.logoContainer}>
-        <Text style={styles.logoText}>Tibbit</Text>
-      </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Logo */}
+        <View style={styles.logoContainer}>
+        <Image source={require('../assets/logo.png')} style={styles.icon} />
 
-      <Text style={styles.title}>Welcome to tibbit</Text>
-      <Text style={styles.subtitle}>
-        Signup to get Quality Medical Services at your fingertips
-      </Text>
+        </View>
 
-      {/* Form Fields */}
+        <Text style={styles.title}>User Registeration</Text>
+        <Text style={styles.subtitle}>
+          Create an account for easy health management
+        </Text>
+
+        {/* Form Fields */}
       <TextInput
-        style={styles.input}
-        placeholder="Name *"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Phone Number *"
-        keyboardType="phone-pad"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="CNIC Number (optional)"
-        keyboardType="numeric"
-        value={cnic}
-        onChangeText={setCnic}
-      />
-
-      {/* Gender Selection */}
-      <Text style={styles.genderLabel}>Gender *</Text>
-      <RadioForm
-        radio_props={radio_props}
-        initial={-1}
-        formHorizontal={true}
-        labelHorizontal={true}
-        buttonColor={'#B13E2A'}
-        selectedButtonColor={'#B13E2A'}
-        onPress={(value: React.SetStateAction<null>) => setGender(value)}
-        labelStyle={styles.radioLabel}
-        buttonSize={12}
-      />
-
-      {/* Terms and Conditions */}
-      <View style={styles.checkboxContainer}>
-      <CheckBox
-  title='I have accepted the Terms and Conditions'
-  checked={termsAccepted}
-  onPress={() => setTermsAccepted(!termsAccepted)}
-  containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
+  style={styles.input}
+  placeholder="Name *"
+  placeholderTextColor="#888"
+  value={name}
+  onChangeText={setName}
 />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Phone Number *"
+          placeholderTextColor="#888"
+
+          keyboardType="phone-pad"
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="CNIC Number (optional)"
+          placeholderTextColor="#888"
+
+          keyboardType="numeric"
+          value={cnic}
+          onChangeText={setCnic}
+        />
+
+<TextInput
+          style={styles.input}
+          placeholder="DOB (dd/mm/yyyy)"
+          placeholderTextColor="#888"
+
+          keyboardType="numeric"
+          value={DOB}
+          onChangeText={setDOB}
+        />
+
+
+        {/* Gender Selection */}
+        <Text style={styles.genderLabel}>Gender *</Text>
+        <RadioForm
+          radio_props={radio_props}
+          initial={-1}
+          formHorizontal={true}
+          labelHorizontal={true}
+          buttonColor={'#B13E2A'}
+          selectedButtonColor={'#B13E2A'}
+          onPress={(value) => setGender(value)}
+          labelStyle={styles.radioLabel}
+          buttonSize={10}
+        />
+
+        {/* Terms and Conditions */}
+        <View style={styles.checkboxContainer}>
+        <CheckBox
+          value={termsAccepted}
+          onValueChange={setTermsAccepted}
+          tintColors={{ true: '#B13E2A', false: '#333' }}
+        />
         <Text style={styles.checkboxLabel}>
           I have accepted the{' '}
           <Text style={styles.termsText}>Terms and Conditions</Text>
         </Text>
       </View>
 
-      {/* Continue Button */}
-      <TouchableOpacity style={styles.continueButton} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Continue</Text>
+
+        {/* Continue Button */}
+        <TouchableOpacity style={styles.continueButton} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+
+        {/* Already a Member */}
+        <Text style={styles.footerText}>
+          Already a member? <Text style={styles.loginText}></Text>
+        </Text>
+
+        <TouchableOpacity
+        style={styles.registerButton}
+        onPress={handleRegister}>
+        <Text style={styles.registerButtonText}>Login</Text>
       </TouchableOpacity>
 
-      {/* Already a Member */}
-      <Text style={styles.footerText}>
-        Already a member? <Text style={styles.loginText}>Login</Text>
-      </Text>
-    </View>
+
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 20,
+
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    padding: 20,
-    justifyContent: 'center',
   },
   logoContainer: {
+    marginTop:30,
+
     marginBottom: 20,
-  },
-  logoText: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#B13E2A',
+    alignItems: 'center',
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
-    color: '#B13E2A',
+    color: appColors.jazzred,
   },
   subtitle: {
     fontSize: 14,
     textAlign: 'center',
     color: '#333',
-    marginBottom: 30,
+    paddingHorizontal: 50,
+    marginBottom: 20,
   },
   input: {
     width: '100%',
@@ -144,6 +190,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 12,
+    color:appColors.Btnblack,
     marginBottom: 15,
   },
   genderLabel: {
@@ -154,36 +201,54 @@ const styles = StyleSheet.create({
     color: '#B13E2A',
   },
   radioLabel: {
-    fontSize: 16,
-    marginRight: 20,
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginRight: 40,
     color: '#333',
+    
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 15,
-  },
-  checkboxLabel: {
-    fontSize: 14,
-    color: '#333',
-  },
-  termsText: {
-    color: '#B13E2A',
-    textDecorationLine: 'underline',
-  },
+ 
   continueButton: {
-    backgroundColor: '#4E4E4E',
+    backgroundColor: appColors.jazzred,
     paddingVertical: 15,
     paddingHorizontal: 100,
-    borderRadius: 5,
-    marginBottom: 20,
+    borderRadius: 8,
+    marginBottom: 40,
   },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+
+  registerButton:{
+    backgroundColor: '#AF35301A',
+    // paddingVertical: 15,
+    // paddingHorizontal: 70,
+    // borderRadius: 8,
+    // marginVertical: 20,
+    // alignSelf: 'center',
+    // marginBottom: 5,
+    paddingVertical: 15,
+    paddingHorizontal: 140,
+    borderRadius: 8,
+    marginVertical: 10,
+    alignSelf: 'center',
+    marginBottom: 0,
+  },
+  registerButtonText: {
+    color: appColors.jazzred,
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight:'bold',
+  },
+
   buttonText: {
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
   },
   footerText: {
+    textAlign: 'center',
     fontSize: 14,
     color: '#333',
   },
@@ -191,6 +256,45 @@ const styles = StyleSheet.create({
     color: '#B13E2A',
     fontWeight: 'bold',
   },
+
+  icon: {
+    height: 80,
+    width:200,
+    // color: appColors.Btnblack,
+  },
+
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+    
+  },
+  // checkboxContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   marginVertical: 15,
+  //   // Adjust space between checkbox and text
+  //   justifyContent: 'flex-start',
+  // },
+  checkbox: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    padding: 10,
+  },
+  checkboxLabel: {
+    fontSize: 14,
+    color: '#333',
+    marginLeft: 5, // Add space between the checkbox and text
+  },
+  termsText: {
+    color: '#B13E2A',
+    fontWeight:'bold',
+    textDecorationLine: 'underline',
+  },
+
 });
+
+
+
 
 export default SignupScreen;
