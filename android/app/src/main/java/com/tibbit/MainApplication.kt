@@ -1,4 +1,4 @@
-package com.crean.tibbit
+package com.jazz.tibbit
 
 import android.app.Application
 import com.facebook.react.PackageList

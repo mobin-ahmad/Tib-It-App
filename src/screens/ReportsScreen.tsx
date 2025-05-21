@@ -7,6 +7,8 @@ import { setSelectedPatient } from '../store/slices/patientsSlice';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLabReports } from '../hooks/useAuth';
+import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView
+import { Linking } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -67,7 +69,7 @@ const ReportScreen = ({ navigation }) => {
 
   const patients = useSelector((state) => state.patients.list);
   const selectedPatient = useSelector((state) => state.patients.selectedPatient);
-  const { mutate: fetchLabReports, isLoading } = useLabReports();
+  const { mutate: fetchLabReports, data: labData, isLoading, isError } = useLabReports();
   const [selectedTest, setSelectedTest] = useState(null);
 
 
@@ -115,8 +117,12 @@ const ReportScreen = ({ navigation }) => {
       },
       onError: (error) => {
         if (error.response?.status === 404) {
+          console.log("gggggggg",error.response?.status );
+
           // Alert.alert('No medical history records found for this patient.');
         } else {
+          console.log("gggggggg",error.response?.status );
+          
           // Alert.alert('Error', 'Failed to fetch medical history. Please try again.');
         }
       },
@@ -129,27 +135,36 @@ const ReportScreen = ({ navigation }) => {
   }, [selectedPatient]);
 
   // Filter data based on selected patient
-  const LabReports = useSelector(
-    (state) => state.labreport?.Reports || []
-  );
+  // const LabReports = useSelector(
+  //   (state) => state.labreport?.Reports || []
+  // );
 
-  console.log("LabReports",LabReports);
+  console.log("LabReports",labData?.data);
   
+  const filteredData =
+  selectedPatient?.patient_Id !== 'all'
+    ? labData?.data.labTestData.filter((item) =>
+        labData?.data.patientDetails?.fullName === selectedPatient.patient_Name
+      )
+    :
+     labData?.data.labTestData;
 
-  const filteredData = selectedPatient?.patient_Id !== 'all'
-    ? LabReports.filter((item) => item.patient_ID === selectedPatient.patient_Id)
-    : LabReports;
+
 
   const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => setSelectedTest(item.testDetails)}>
+
+  
+
     <View style={styles.card}>
       <View style={styles.cardContent}>
         <Text>
           <Text style={styles.labelText}>Patient Number: </Text>
-          <Text style={styles.valueText}>{item.patient_ID}</Text>
+          <Text style={styles.valueText}>{item.patientDetails?.fullName}</Text>
         </Text>
         <Text>
           <Text style={styles.labelText}>Lab Test Id: </Text>
-          <Text style={styles.valueText}>{item.lab_Test_ID}</Text>
+          <Text style={styles.valueText}>{item.labTestID}</Text>
         </Text>
         <Text>
           <Text style={styles.labelText}>Date: </Text>
@@ -158,8 +173,11 @@ const ReportScreen = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.downloadBtn}
-        onPress={() => setSelectedTest(item.testDetails)} // Set selected test details when icon is clicked
-      >
+        onPress={() => {
+          // Open the download link in the browser
+          Linking.openURL(labData?.data.downloadLink)
+            .catch(err => console.error('Failed to open URL:', err));
+        }}      >
         <Svg height={24} width={24} viewBox="0 0 24 24" fill="none">
           <Path
             d="M12 16V4M8 12l4 4 4-4"
@@ -177,6 +195,8 @@ const ReportScreen = ({ navigation }) => {
         </Svg>
       </TouchableOpacity>
     </View>
+    </TouchableOpacity>
+
   );
 
 
@@ -206,6 +226,7 @@ const ReportScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
 
+<SafeAreaView style={styles.safeAreaHeader}>
 
 <View style={styles.header}>
         <TouchableOpacity style={styles.locationContainer}onPress={handleVerify}>
@@ -231,7 +252,7 @@ const ReportScreen = ({ navigation }) => {
         {/* </View> */}
       </View>
 
-
+      </SafeAreaView>
       <View style={styles.container2}>
 
 
@@ -254,11 +275,11 @@ const ReportScreen = ({ navigation }) => {
 
 
       {/* List of reports */}
-      {filteredData.length > 0 ? (
+      {filteredData?.length > 0 ? (
   <FlatList
     data={filteredData}
     renderItem={renderItem}
-    keyExtractor={(item) => item.patient_ID.toString()} // Use patient_ID as key
+    // keyExtractor={(item) => item.patient_ID.toString()} // Use patient_ID as key
     style={{ marginTop: 20 }}
   />
 ) : (
@@ -350,7 +371,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 10,
-    maxHeight: 300,
+    // maxHeight: 300,
   },
   dropdownItem: {
     padding: 10,

@@ -9,6 +9,7 @@ import {
   ScrollView,
   Modal,
   FlatList,
+  Alert,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Svg, { Path } from 'react-native-svg';
@@ -22,6 +23,7 @@ import { cleardoctors } from '../store/slices/doctorsSlice';
 import { cleardepartments } from '../store/slices/departmentsSlice';
 import { clearhospitals } from '../store/slices/hospitalsSlice';
 import { useDrawer } from '../navigation/tab';
+import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView
 
 // Custom Dropdown Component
 const CustomDropdown = ({ label, data, onSelect }) => {
@@ -84,8 +86,10 @@ const ProfileScreen = ({ navigation, }) => {
   const selectedPatient = useSelector((state) => state.patients.selectedPatient);
   const patients = useSelector((state) => state.patients.list);
   const dispatch = useDispatch();
-  const { toggleDrawer } = useDrawer();
-
+  // const { toggleDrawer } = useDrawer();
+  const handleMenuPress = () => {
+    navigation.openDrawer(); // Open the drawer
+  };
   
 
   const handleLogout = () => {
@@ -106,16 +110,52 @@ const ProfileScreen = ({ navigation, }) => {
     { id: 'logout', label: 'Logout', icon: require('../assets/logout.png') },
   ];
 
+
+  const handlePress = (itemId) => {
+    switch (itemId) {
+      case 'dependents':
+        // Navigate or perform action for 'My Dependents'
+        console.log("Navigating to My Dependents");
+        Alert.alert('Coming Soon', 'This screen is currently under development.');
+
+        // navigation.navigate('DependentsScreen'); // Example if using React Navigation
+        break;
+      case 'privacy_policy':
+        // Navigate or perform action for 'Privacy Policy'
+        console.log("Opening Privacy Policy");
+        Alert.alert('Coming Soon', 'This screen is currently under development.');
+
+        // navigation.navigate('PrivacyPolicyScreen');
+        break;
+      case 'delete_account':
+        // Handle delete account logic
+        console.log("Delete account triggered");
+        Alert.alert('Coming Soon', 'This screen is currently under development.');
+        break;
+      case 'logout':
+        handleLogout();
+        break;
+      default:
+        console.log("Unknown button pressed");
+    }
+  };
+
+
   return (
     <View style={styles.container}>
       {/* Header */}
+      <SafeAreaView style={styles.safeAreaHeader}>
+
+      
       <View style={styles.header}>
-        <TouchableOpacity style={styles.iconButton} onPress={toggleDrawer}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleMenuPress}>
           <Image source={require('../assets/menu.png')} style={styles.iconMenu} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
         <Image source={require('../assets/Vector.png')} style={styles.iconHidden} />
       </View>
+      </SafeAreaView>
+
 
       {/* Content */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -142,9 +182,9 @@ const ProfileScreen = ({ navigation, }) => {
             <Text style={styles.name}>
                 {selectedPatient ? selectedPatient.patient_Name : 'John Smith'}
               </Text>
-            <TouchableOpacity>
+            {/* <TouchableOpacity> */}
 <Text style={styles.editProfile}>Edit Profile</Text>
-</TouchableOpacity>
+{/* </TouchableOpacity> */}
     </View>
   </View>
 
@@ -181,20 +221,23 @@ const ProfileScreen = ({ navigation, }) => {
         <Text style={styles.sectionTitle}>Change Patient:</Text>
         <CustomDropdown
           data={patients}
-          onSelect={(item) => setSelectedPatient(item)}
-        />
+          onSelect={(item) => setSelectedPatient(item)} label={undefined}        />
 
         {/* Menu Items */}
         <View style={styles.menuContainer}>
           {menuItems.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.menuItem}
-            
-            onPress={item.id === "logout" ? handleLogout : () => {}}
->
-              
-              <Image source={item.icon} style={styles.menuIcon} />
-              <Text style={styles.menuText}>{item.label}</Text>
-            </TouchableOpacity>
+         <TouchableOpacity
+         key={item.id}
+         style={styles.menuItem}
+         onPress={() => handlePress(item.id)} // Handle all button presses
+
+        //  onPress={item.id === 'logout' ? handleLogout : null} // Only 'logout' is clickable
+        //  disabled={item.id !== 'logout'} // Disable all other buttons
+       >
+         <Image source={item.icon} style={styles.menuIcon} />
+         <Text style={styles.menuText}>{item.label}</Text>
+       </TouchableOpacity>
+        
           ))}
         </View>
       </ScrollView>
@@ -475,3 +518,7 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreen;
+function alert(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

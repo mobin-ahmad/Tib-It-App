@@ -11,8 +11,13 @@ import {
 // import { useVerifyOTP } from '../hooks/apiHooks'; // Update the path as per your folder structure
 import appColors from '../components/appcolors';
 import { useVerifyOTP } from '../hooks/useAuth';
+import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView
+import { useNavigation } from '@react-navigation/native';
 
-const VerificationScreen = () => {
+const VerificationScreen = ({ route }) => {
+  const { phoneNumber } = route.params; // Extract phoneNumber from route params
+  const navigation = useNavigation();
+
   const [timer, setTimer] = useState(40); // Timer for resend
   const [otp, setOtp] = useState(['', '', '', '']); // Array for 4 digits of OTP
 
@@ -44,6 +49,8 @@ const VerificationScreen = () => {
     // Call API to verify OTP
     verifyOtp(otpCode, {
       onSuccess: () => {
+        navigation.navigate('AllPatientsScreen', {phoneNumber});
+
         Alert.alert('Success', 'OTP Verified Successfully');
       },
       onError: (error) => {
@@ -71,6 +78,8 @@ const VerificationScreen = () => {
   return (
     <View style={styles.container}>
       {/* Header */}
+      <SafeAreaView style={styles.safeAreaHeader}>
+
       <View style={styles.header}>
         <TouchableOpacity style={styles.locationContainer}>
           <Image
@@ -84,12 +93,13 @@ const VerificationScreen = () => {
           style={styles.icon2}
         />
       </View>
+      </SafeAreaView>
 
       {/* Verification Text */}
       <Text style={styles.title}>OTP Verification</Text>
       <Text style={styles.description}>
         We sent you a verification code to your phone number{' '}
-        <Text style={styles.phoneNumber}>03******1</Text>.
+        <Text style={styles.phoneNumber}>{phoneNumber}</Text>.
       </Text>
 
       {/* Custom OTP Input */}

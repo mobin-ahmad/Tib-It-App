@@ -3,17 +3,9 @@
 <plist version="1.0">
 <dict>
 
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to provide services</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We need your location to provide services</string>
 
-
-<key>UISupportedInterfaceOrientations</key>
-<array>
-  <string>UIInterfaceOrientationPortrait</string>
-  <string>UIInterfaceOrientationPortraitUpsideDown</string>
-</array>
+<key>CFBundleIconName</key>
+<string>AppIcon</string>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -39,12 +31,13 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to provide services</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>

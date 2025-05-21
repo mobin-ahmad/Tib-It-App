@@ -97,6 +97,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { clearpatients, setSelectedPatient } from '../store/slices/patientsSlice';
 import { persistor } from '../store/store';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { useAppointment } from '../hooks/useAuth';
 const CustomDropdown = ({ label, data, onSelect }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -274,6 +276,8 @@ const AppointmentDetailScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+            <SafeAreaView style={styles.safeAreaHeader}>
+
       <View style={styles.header2}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.icon}>
           <Image
@@ -283,6 +287,7 @@ const AppointmentDetailScreen = ({ route, navigation }) => {
         </TouchableOpacity>
         <Text style={styles.header}>Appointment Booking</Text>
       </View>
+      </SafeAreaView>
       <StepIndicator step={4} />
 
       <View style={styles.containerContent}>
@@ -573,7 +578,7 @@ fontWeight:'bold',
     alignItems: 'center',
     marginVertical: 10,
   },
-  checkboxText: { fontSize: 14, color: '#333' },
+  checkboxText: { fontSize: 14, color: '#333',marginHorizontal:12, },
   termsText: { color: '#B71C1C', fontWeight: 'bold' },
   nextButton: {
     backgroundColor: '#B71C1C',

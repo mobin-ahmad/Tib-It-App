@@ -382,12 +382,15 @@
         Alert,
         BackHandler
       } from 'react-native';
+      import { Linking } from 'react-native';
+
       import Svg, { Path } from 'react-native-svg';
       import appColors from '../components/appcolors';
       import { useNavigation, useRoute } from '@react-navigation/native';
       import { useDispatch, useSelector } from 'react-redux';
       import { useMedicalHistory } from '../hooks/useAuth';
       import { setSelectedPatient } from '../store/slices/patientsSlice';
+      import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView
 
       const { width } = Dimensions.get('window');
 
@@ -450,7 +453,8 @@
 
         const patients = useSelector((state) => state.patients.list);
         const selectedPatient = useSelector((state) => state.patients.selectedPatient);
-        const { mutate: fetchMedicalHistory, isLoading } = useMedicalHistory();
+        // const { mutate: fetchMedicalHistory, isLoading } = useMedicalHistory();
+        const { mutate: fetchMedicalHistory, data: labData, isLoading, isError } = useMedicalHistory();
 
 
 
@@ -471,7 +475,22 @@
         }, []);
 
 
-
+        const formatDate = (isoString) => {
+          const date = new Date(isoString);
+        
+          // Extract date and time components
+          const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true, // For AM/PM format
+          };
+        
+          return date.toLocaleString('en-US', options);
+        };
 
 
         const handleVerify = () => {
@@ -514,15 +533,37 @@
           (state) => state.medicalhistory?.History || []
         );
 
-        console.log("medicalHistoryData",medicalHistoryData);
+        // console.log("medicalHistoryData",medicalHistoryData);
         
+        console.log("Lab Data:", labData);
 
-        const filteredData =
+        const patientDetails = labData?.data?.patientDetails
+        ? Array.isArray(labData.data.patientDetails)
+          ? labData.data.patientDetails
+          : [labData.data.patientDetails]
+        : []; // Default to an empty array
+      
+      const filteredData =
         selectedPatient?.patient_Id !== 'all'
-          ? medicalHistoryData.filter(
-              (item) => item.patient_ID === selectedPatient.patient_Id // Match correct key (patient_ID)
+          ? patientDetails.filter(
+              (item) => item.patient_Name === selectedPatient.patient_Name
             )
-          : medicalHistoryData; // Show all if no specific patient is selected
+          : patientDetails;
+      
+      
+      
+      
+      
+      
+
+
+        // const filteredData =
+        // // selectedPatient?.patient_Id !== 'all'
+        //   // ? medicalHistoryData.filter(
+        //   //     (item) => item.patient_Name === selectedPatient.patient_Name // Match correct key (patient_ID)
+        //   //   )
+        //   // : 
+        //   medicalHistoryDatapatientDetails; // Show all if no specific patient is selected
 
           const renderItem = ({ item }) => (
               <View style={styles.card}>
@@ -539,7 +580,7 @@
                   </View>
                   <View style={styles.infoRow}>
                     <Text style={styles.labelText}>Visit Date: </Text>
-                    <Text style={styles.valueText}>{item.created_Time}</Text>
+                    <Text style={styles.valueText}>{formatDate(item.created_Time)}</Text>
                   </View>
                   <View style={styles.infoRow}>
                     <Text style={styles.labelText}>Gender: </Text>
@@ -547,17 +588,25 @@
                   </View>
                   <View style={styles.infoRow}>
                     <Text style={styles.labelText}>Consultant Name: </Text>
-                    <Text style={styles.valueText}>{item.consultant_Name}</Text>
+                    <Text style={styles.valueText}>{item.doctorName}</Text>
                   </View>
-                </View>
-                <TouchableOpacity style={styles.viewDetailsBtn}>
+                  <TouchableOpacity style={styles.viewDetailsBtn}   onPress={() => {
+          // Open the download link in the browser
+          Linking.openURL(labData?.data.downloadLink)
+            .catch(err => console.error('Failed to open URL:', err));
+        }}      >
+          
                   <Text style={styles.viewDetailsText}>View Details</Text>
                 </TouchableOpacity>
+                </View>
+              
               </View>
             );
 
         return (
           <View style={styles.container}>
+                  <SafeAreaView style={styles.safeAreaHeader}>
+
             <View style={styles.header}>
               <TouchableOpacity
                 style={styles.locationContainer}
@@ -578,6 +627,7 @@
                 style={styles.icon2}
               />
             </View>
+            </SafeAreaView>
 
             <View style={styles.container2}>
               <Text style={styles.title}>Patient History</Text>
@@ -592,15 +642,16 @@
                 handleContinue={handleContinue}
               />
 
-      {filteredData.length > 0 ? (
-        <FlatList
-          data={filteredData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.patient_ID.toString()} // Use patient_ID as key
-        />
-      ) : (
-        <Text>No medical history available.</Text> // Provide fallback text when no records are available
-      )}
+{filteredData?.length > 0 ? (
+  <FlatList
+    data={filteredData}
+    renderItem={renderItem}
+    keyExtractor={(item, index) => index.toString()} // Provide a unique key
+  />
+) : (
+  <Text>No medical history available.</Text>
+)}
+
 
             </View>
           </View>
@@ -734,6 +785,8 @@
           backgroundColor: '#B13E2A',
           paddingVertical: 6,
           paddingHorizontal: 12,
+          alignItems: 'center',
+
           borderRadius: 4,
         },
         viewDetailsText: {

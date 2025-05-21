@@ -53,7 +53,7 @@ const handleContinue = async () => {
       dispatch(setToken(token));
     }
     // // Navigate to VerificationScreen on success
-    navigation.navigate("VerificationScreen");
+    navigation.navigate("VerificationScreen", { phoneNumber });
   } catch (error) {
     console.error("Login Error:", error);
 

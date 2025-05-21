@@ -121,6 +121,7 @@ import appColors from '../components/appcolors';
 import { useSelector } from 'react-redux';
 import { useTimeSlots } from '../hooks/useAuth';
 import dayjs from 'dayjs';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DoctorAvailabilityScreen = ({ route, navigation }) => {
   const { selectedHospital } = route.params;
@@ -248,12 +249,15 @@ const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
   return (
     <View style={styles.container}>
       {/* Header with Back Button */}
+      <SafeAreaView style={styles.safeAreaHeader}>
+
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={require('../assets/arrow-back.png')} style={styles.icon} />
         </TouchableOpacity>
         <Text style={styles.header}>Doctor Availability</Text>
       </View>
+      </SafeAreaView>
       <StepIndicator step={3} />
 
       {/* Doctor Info */}

@@ -56,6 +56,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, BackHandler } from 're
 import StepIndicator from './stepIndicator';
 import DatePicker from 'react-native-date-picker';
 import appColors from '../components/appcolors';
+import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView
 
 const SelectDateScreen = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
@@ -101,6 +102,8 @@ const SelectDateScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+            <SafeAreaView style={styles.safeAreaHeader}>
+
       <View style={styles.header2}>
         <TouchableOpacity onPress={handleVerify} style={styles.icon}>
           <Image
@@ -110,6 +113,7 @@ const SelectDateScreen = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.header}>Appointment Booking</Text>
       </View>
+      </SafeAreaView>
 
       <StepIndicator step={1} />
 
@@ -231,6 +235,7 @@ const styles = StyleSheet.create({
 
   datePickerContainer: {
     alignItems: 'center',
+    
     paddingVertical: 10,
   },
 

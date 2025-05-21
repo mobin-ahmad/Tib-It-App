@@ -61,11 +61,11 @@ export const useVerifyOTP = () => {
   return useMutation(verifyOTP, {
     onSuccess: (data) => {
       if (data && data.data && Array.isArray(data.data.patients)) {
-        dispatch(setPatients(data.data.patients)); // Dispatch correctly formatted data
+        // dispatch(setPatients(data.data.patients)); // Dispatch correctly formatted data
       } else {
         console.error('Invalid patients data', data);
       }
-      navigation.navigate('AllPatientsScreen');
+      // navigation.navigate('AllPatientsScreen', {phoneNumber});
     },
     onError: (error) => {
        if(error.response?.status === 401){
@@ -127,7 +127,6 @@ const bookAppointment = ({
 
 
 
-
 export const useAppointment = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -166,13 +165,148 @@ export const useAppointment = () => {
 
 
 
+const addPatient = (payload) => {
+  console.log("Patient Payload:", JSON.stringify(payload));
+
+  // Replace the API URL with the appropriate one
+  return api.post(`${serverRoutes.Patient}`, payload);
+};
+
+
+export const usePatient = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  return useMutation(addPatient, {
+    onSuccess: (data) => {
+      console.log('Patient Added successfully:', data);
+      Alert.alert("Success", "Your Patient has been Added!");
+      // navigation.reset({
+      //   index: 0,
+      //   routes: [{ name: 'tabs' }],
+      // });
+    },
+    onError: (error) => {
+      if (error.response?.status === 400) {
+        Alert.alert('Error', 'Invalid request. Please check the inputs.');
+      } else if (error.response?.status === 401) {
+        Alert.alert('Error', 'Token Expired. Please login again.');
+        dispatch(logout());
+        dispatch(clearpatients());
+        persistor.purge();
+        navigation.navigate("LoginScreen");
+      } else {
+        console.error(error);
+        Alert.alert('Error', 'Failed to book appointment. Please try again.');
+      }
+    },
+  });
+};
+
+
+
+
+
+const Register = (payload) => {
+  console.log("register Payload:", JSON.stringify(payload));
+
+  // Replace the API URL with the appropriate one
+  return api.post(`${serverRoutes.Register}`, payload);
+};
+
+
+export const useRegisters = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  return useMutation(Register, {
+    onSuccess: (data) => {
+      console.log('Patient Registered successfully:', data);
+      Alert.alert("Success", "Your Patient has been Registered!");
+      // navigation.reset({
+      //   index: 0,
+      //   routes: [{ name: 'tabs' }],
+      // });
+    },
+    onError: (error) => {
+      if (error.response?.status === 400) {
+        Alert.alert('Error', 'Invalid request. Please check the inputs.');
+      } 
+      else if (error.response?.status === 401) {
+        Alert.alert('Error', 'Token Expired. Please login again.');
+        dispatch(logout());
+        dispatch(clearpatients());
+        persistor.purge();
+        navigation.navigate("LoginScreen");
+      }
+      else if (error.response?.status === 409) {
+        Alert.alert('Error', 'A patient with this Phone number and Name already exists.');
+       
+      }
+      else {
+        console.error(error);
+        Alert.alert('Error', 'Failed to Register Patient. Please try again.');
+      }
+    },
+  });
+};
+
+
+
+
+const fetchAppointments = (patientId) => {
+  return api.get(`${serverRoutes.Appointment}/${patientId}` );
+};
+
+export const useAppointments = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  return useMutation(fetchAppointments, {
+    onSuccess: (data) => {
+      // Check if data is valid and an array
+      if (data && Array.isArray(data.data)) {
+        console.log("sdhjasdbas", data.data);
+        
+        // dispatch(setdoctors(data.data)); // Dispatch the fetched doctor data
+      } else {
+        // console.error('Invalid doctors data', data);
+      }
+    },
+    onError: (error) => {
+      if (error.response?.status === 404) {
+        // Alert.alert('Error', 'No Doctors history records found for this Department.');
+      }
+
+      else if(error.response?.status === 401){
+
+        Alert.alert('Error', 'Token Expired Login Again.');
+
+       
+
+        dispatch(logout()); // Clears user data
+        dispatch(clearpatients());
+       
+      
+        // dispatch(clearPatients()); // Clears patient data
+        persistor.purge(); // Clears persisted data from storage
+        navigation.navigate("LoginScreen"); // Red
+      }
+      else
+        console.error(error);
+        // Alert.alert('Error', 'Failed to fetch. Please try again.');
+      },
+  });
+};
+
+
+
+
 
 
 const fetchDoctors = (departmentId) => {
   return api.get(`${serverRoutes.Doctors}?departmentId=${departmentId}` );
 };
-
-
 
 
 export const useDoctors = () => {
@@ -215,6 +349,58 @@ export const useDoctors = () => {
       },
   });
 };
+
+
+
+
+
+
+const fetchPatients = (PhoneNumber) => {
+  return api.get(`${serverRoutes.Patients}/${PhoneNumber}` );
+};
+
+
+export const usePatients = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  return useMutation(fetchPatients, {
+    onSuccess: (data) => {
+      // Check if data is valid and an array
+      if (data && Array.isArray(data.data.patients)) {
+        console.log("sdhjasdbas", data.data.patients);
+        
+        dispatch(setPatients(data.data.patients)); // Dispatch the fetched doctor data
+      } else {
+        console.error('Invalid Patients data', data);
+      }
+    },
+    onError: (error) => {
+      if (error.response?.status === 404) {
+        Alert.alert('Error', 'No Patients records found for this User.');
+      }
+
+      else if(error.response?.status === 401){
+
+        Alert.alert('Error', 'Token Expired Login Again.');
+
+       
+
+        dispatch(logout()); // Clears user data
+        dispatch(clearpatients());
+       
+      
+        // dispatch(clearPatients()); // Clears patient data
+        persistor.purge(); // Clears persisted data from storage
+        navigation.navigate("LoginScreen"); // Red
+      }
+      else
+        console.error(error);
+        // Alert.alert('Error', 'Failed to fetch. Please try again.');
+      },
+  });
+};
+
 
 
 
@@ -465,13 +651,18 @@ export const useMedicalHistory = () => {
 
   return useMutation(MedicalHistory, {
     onSuccess: (data) => {
-      console.log("Fetched Medical History:", data.data.medicalRecords);
-      if (data && data.data && Array.isArray(data.data.medicalRecords)) {
-        dispatch(setMedicalHistory(data.data.medicalRecords)); // Dispatch the correct data
+      console.log("Fetched Medical History:", data.data.patientDetails);
+      const patientDetailsArray = Array.isArray(data.data.patientDetails)
+        ? data.data.patientDetails
+        : [data.data.patientDetails];
+    
+      if (patientDetailsArray) {
+        dispatch(setMedicalHistory(patientDetailsArray));
       } else {
-        console.error('Invalid medical records data', data);
+        console.error("Invalid response format:", data);
       }
     },
+    
     
     onError: (error) => {
       if (error.response?.status === 404) {
@@ -518,9 +709,9 @@ export const useLabReports = () => {
 
   return useMutation(LabReposrts, {
     onSuccess: (data) => {
-      console.log("Fetched Lab History:", data.data.labHistory);
-      if (data && data.data && Array.isArray(data.data.labHistory)) {
-        dispatch(setLabReport(data.data.labHistory)); // Dispatch the correct data
+      console.log("Fetched Lab History:", data.data.labTestData);
+      if (data && data.data && Array.isArray(data.data.labTestData)) {
+        dispatch(setLabReport(data.data.labTestData)); // Dispatch the correct data
       } else {
         console.error('Invalid lab records data', data);
       }

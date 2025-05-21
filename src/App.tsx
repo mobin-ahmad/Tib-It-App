@@ -7,6 +7,7 @@ import { persistor, store } from './store/store';
 import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Orientation from 'react-native-orientation-locker';  // Import the orientation library
+// import '../Tibbit/src/components/gesture-handler.native';
 
 const queryClient = new QueryClient();
 

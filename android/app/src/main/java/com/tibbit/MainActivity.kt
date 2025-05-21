@@ -1,4 +1,4 @@
-package com.crean.tibbit
+package com.jazz.tibbit
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

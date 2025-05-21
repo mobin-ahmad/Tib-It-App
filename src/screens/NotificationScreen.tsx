@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import appColors from '../components/appcolors';
+import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView
 
 const NotificationScreen = () => {
   const [otp, setOtp] = useState(['', '', '', '']); // Array for 4 digits of OTP
@@ -39,6 +40,7 @@ const NotificationScreen = () => {
         <Text style={styles.headerTitle}>Verification</Text>
       </View> */}
 
+<SafeAreaView style={styles.safeAreaHeader}>
 
 
 <View style={styles.header}>
@@ -64,7 +66,7 @@ const NotificationScreen = () => {
           {/* </View> */}
         {/* </View> */}
       </View>
-
+      </SafeAreaView>
 
       <Image
         source={require('../assets/notificationscreen.png')} // Add your main logo here

@@ -15,6 +15,8 @@ import CheckBox from '@react-native-community/checkbox'; // Install via npm
 import RadioForm from 'react-native-simple-radio-button'; // Install via npm
 import appColors from '../components/appcolors';
 import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useRegisters } from '../hooks/useAuth';
 
 const SignupScreen = () => {
   const [name, setName] = useState('');
@@ -22,9 +24,11 @@ const SignupScreen = () => {
   const [cnic, setCnic] = useState('');
 
   const [DOB, setDOB] = useState('');
-  const [gender, setGender] = useState(null);
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());  const [gender, setGender] = useState(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const navigation = useNavigation();
+  const { mutate, isLoading } = useRegisters();
 
   const radio_props = [
     { label: 'Male', value: 'Male', },
@@ -33,23 +37,88 @@ const SignupScreen = () => {
 
   ];
 
-  const handleSubmit = () => {
-    navigation.navigate("VerificationScreen");
-
-    
-    // if (!name || !phoneNumber || !gender || !termsAccepted) {
-    //   Alert.alert(
-    //     'Error',
-    //     'Please fill all the required fields and accept the terms and conditions.',
-    //   );
-    // } else {
-    //   Alert.alert('Success', 'Form submitted successfully');
-    //   // Further submit logic here
-    // }
+  const handleDateChange = (event, date) => {
+    setShowPicker(Platform.OS === 'ios');
+    if (date) {
+      setSelectedDate(date);
+      
+      // Format the date as an ISO 8601 string in UTC
+      const isoDate = date.toISOString();
+      
+      setDOB(isoDate); // Save the date in "2025-01-30T09:25:18.349Z" format
+    }
   };
+  
+
+
+  const handleSubmit = () => {
+    if (!name || !phoneNumber || !gender || !termsAccepted || !DOB) {
+      Alert.alert("Error", "Please fill in all fields.");
+      return;
+    }
+
+
+    const requestBody = {
+      name: name,
+      mobileNumber: phoneNumber,
+      dob: DOB,
+      gender: gender,
+      relation: "patient",
+    };
+    console.log("Payload for Patient:", requestBody);
+  
+    // Call the bookAppointment function
+    // confirmAppointment(payload);
+    // const { mutate } = useRegisters();
+
+    mutate(requestBody, {
+      onSuccess: (response) => {
+        Alert.alert('Success', 'Registration successful.');
+        navigation.navigate('LoginScreen');
+      },
+      onError: (error) => {
+        // if (error?.response?.status === 400) {
+        //   Alert.alert('Error', 'Invalid request. Please check the inputs.');
+        // } else {
+        //   Alert.alert('Error', 'Failed to register the patient. Please try again.');
+        // }
+      }
+    });
+  
+    
+  }
+
+  // const handleSubmit = async () => {
+  //   if (!name || !phoneNumber || !gender || !termsAccepted || !DOB) {
+  //     Alert.alert(
+  //       'Error',
+  //       'Please fill all the required fields and accept the terms and conditions.'
+  //     );
+  //     return;
+  //   }
+
+  //   const requestBody = {
+  //     name: name,
+  //     mobileNumber: phoneNumber,
+  //     dob: DOB,
+  //     gender: gender,
+  //     relation: cnic || 'N/A',
+  //   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       'https://api.tibbit.garajcloud.com/RegisterUser/Register',
+  //       requestBody
+  //     );
+  //     Alert.alert('Success', response.data);
+  //     navigation.navigate('LoginScreen');
+  //   } catch (error) {
+  //     Alert.alert('Registration Failed', error.message);
+  //   }
+  // };
 
   const handleRegister = () => {
-    navigation.navigate("SignupScreen");
+    navigation.navigate('LoginScreen');
   };
 
   return (
@@ -96,15 +165,28 @@ const SignupScreen = () => {
           onChangeText={setCnic}
         />
 
-<TextInput
+<View style={styles.container1}>
+      <TouchableOpacity onPress={() => setShowPicker(true)}>
+        <TextInput
           style={styles.input}
           placeholder="DOB (dd/mm/yyyy)"
           placeholderTextColor="#888"
-
-          keyboardType="numeric"
           value={DOB}
-          onChangeText={setDOB}
+          editable={false}
+          pointerEvents="none"
         />
+      </TouchableOpacity>
+
+      {showPicker && (
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+          maximumDate={new Date()} // Optional: restrict to past dates
+        />
+      )}
+    </View>
 
 
         {/* Gender Selection */}
@@ -233,7 +315,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginVertical: 10,
     alignSelf: 'center',
-    marginBottom: 0,
+    marginBottom: 10,
   },
   registerButtonText: {
     color: appColors.jazzred,

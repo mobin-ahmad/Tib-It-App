@@ -6,7 +6,6 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LocationTaggingScreen from '../screens/LocationTaggingScreen';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
-import Tabs from './tab';
 import VerificationScreen from '../screens/OTPVerificationScreen';
 import AllPatientsScreen from '../screens/PatientSelectionScreen';
 import NotificationScreen from '../screens/NotificationScreen';
@@ -17,6 +16,7 @@ import SelectDateScreen from '../screens/selectDateScreen';
 import SelectDoctorScreen from '../screens/selectDoctorScreen';
 import DoctorAvailabilityScreen from '../screens/doctorAvailibiltyScreen';
 import AppointmentDetailScreen from '../screens/appointmentDetailScreen';
+import Tabs from '../navigation/tab';
 
 const Stack = createStackNavigator();
 
@@ -97,7 +97,11 @@ const AppNavigator = () => {
         <Stack.Screen name="DoctorAvailability" component={DoctorAvailabilityScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AppointmentDetailScreen" component={AppointmentDetailScreen} options={{ headerShown: false }} />
 
-
+        <Stack.Screen
+        name="Tabs" // Updated name for clarity
+        component={Tabs} // Use MainNavigator as the main component
+        options={{headerShown: false}} // Hide header for Main
+      />
 
 
     </Stack.Navigator>

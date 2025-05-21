@@ -260,6 +260,7 @@
 
 
 
+import { SafeAreaView } from 'react-native-safe-area-context'; // Import SafeAreaView
 
 
 import React, { useEffect } from 'react';
@@ -272,7 +273,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import appColors from '../components/appcolors';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
-import { useDrawer } from '../navigation/tab';
+import { useDrawer } from '../navigation/tab'; // Import useDrawer
 
 const { width, height } = Dimensions.get('window');
 
@@ -286,7 +287,7 @@ const iconMapping: Record<string, any> = {
 
 const HomeScreen = () => {
   
-  const { toggleDrawer } = useDrawer();
+  // const { toggleDrawer } = useDrawer(); // Get toggleDrawer function
 
   // const { drawer } = route.params;
   // useEffect(() => {
@@ -311,7 +312,9 @@ const HomeScreen = () => {
   //   }
   // };
 
-
+  const handleMenuPress = () => {
+    navigation.openDrawer(); // Open the drawer
+  };
   const categories = [
     { name: 'Cardiologist', icon: 'ICON_Cardiologist' },
     { name: 'General Physician', icon: 'ICON_GeneralPhysician' },
@@ -334,21 +337,26 @@ const HomeScreen = () => {
 
       const handleBookAppointment = () => {
         selectedPatient?
-        navigation.navigate('SelectDateScreen'):"";
+        navigation.navigate('SelectDateScreen')
+        :""
+        ;
       };
 
 
   return (
+
     <View style={styles.container}>
+
       {/* Header */}
       <View style={styles.header}>
         
 
+      <SafeAreaView style={styles.safeAreaHeader}>
 
 
 <View style={styles.appbar}>
      
-<TouchableOpacity style={styles.locationContainer}  onPress={toggleDrawer}>
+<TouchableOpacity style={styles.locationContainer2} onPress={handleMenuPress}>
 <Image
             source={require('../assets/menu.png')} // Replace with your location icon
             style={styles.iconmenu}
@@ -378,6 +386,8 @@ const HomeScreen = () => {
 
        
 </View>
+
+</SafeAreaView>
 
         
         <View style={styles.headerRight}>
@@ -551,6 +561,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
       },
+      
 
   content: {
     paddingHorizontal: 15,
@@ -564,6 +575,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   searchBar: {
+    height:50,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
