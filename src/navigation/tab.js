@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   },
 
 
-  profileIcon: { backgroundColor: '#B71C1C', padding: 30, borderRadius: 50, marginBottom: 0 },
+  profileIcon: { backgroundColor: appColors.jazzred, padding: 30, borderRadius: 50, marginBottom: 0 },
 
   drawerIcon: {
     width: 20,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     top: -10,
     width: 60,
     height: 60,
-    backgroundColor: 'rgba(163, 62, 57, 0.2)', // Red spotlight color with transparency
+    backgroundColor: appColors.headerColor, // Red spotlight color with transparency
     borderRadius: 30,
   },
   icon: {

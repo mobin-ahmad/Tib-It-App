@@ -196,8 +196,8 @@ const SignupScreen = () => {
           initial={-1}
           formHorizontal={true}
           labelHorizontal={true}
-          buttonColor={'#B13E2A'}
-          selectedButtonColor={'#B13E2A'}
+          buttonColor={appColors?.jazzred}
+          selectedButtonColor={appColors?.jazzred}
           onPress={(value) => setGender(value)}
           labelStyle={styles.radioLabel}
           buttonSize={10}
@@ -208,7 +208,7 @@ const SignupScreen = () => {
         <CheckBox
           value={termsAccepted}
           onValueChange={setTermsAccepted}
-          tintColors={{ true: '#B13E2A', false: '#333' }}
+          tintColors={{ true: appColors?.jazzred, false: '#333' }}
         />
         <Text style={styles.checkboxLabel}>
           I have accepted the{' '}
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
-    color: '#B13E2A',
+    color: appColors?.jazzred,
   },
   radioLabel: {
     fontSize: 12,
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     marginLeft: 5, // Add space between the checkbox and text
   },
   termsText: {
-    color: '#B13E2A',
+    color: appColors?.jazzred,
     fontWeight:'bold',
     textDecorationLine: 'underline',
   },

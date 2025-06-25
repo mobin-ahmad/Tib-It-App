@@ -16,8 +16,9 @@ const appColors = {
   clryellow: '#EFAC0F',
   clrblackdark: '#000000',
 
-jazzred : '#AF3530',
-
+jazzred : '#EFA63E',
+jazzredLight : '#f7d6a8',
+headerColor: '#e1dfdff2',
 
 };
 

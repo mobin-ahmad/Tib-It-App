@@ -478,7 +478,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // justifyContent: 'flex-start',
-    backgroundColor: appColors.jazzred,
+    backgroundColor: appColors.headerColor,
   },
 
 
@@ -488,7 +488,7 @@ const styles = StyleSheet.create({
 
     paddingTop: 10,
     paddingHorizontal: 10,
-    backgroundColor: appColors.jazzred,
+    backgroundColor: appColors.headerColor,
   },
   timeText: {
     color: 'white',

@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 30,
-    backgroundColor: appColors.jazzred,
+    backgroundColor: appColors.headerColor,
   },
   headerTitle: {
     fontSize: 20,
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
   },
 
   profileIcon: {
-    backgroundColor: '#B71C1C',
+    backgroundColor:appColors.jazzred,
     padding: 30,
     borderRadius: 100,
     marginBottom: 10,
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 15,
     marginTop: 15,
-    color: '#b71c1c',
+    color: appColors?.jazzred,
     fontWeight: 'bold',
   },
   dropdownContainer: {
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 15,
-    backgroundColor: '#B71C1C',
+    backgroundColor: appColors.jazzred,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   },
   editProfile: {
     fontSize: 14,
-    color: '#B71C1C',
+    color: appColors?.jazzred,
     textDecorationLine: 'underline',
   },
   divider: {

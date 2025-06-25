@@ -85,7 +85,7 @@ const handleContinue = async () => {
         </View>
 
         <Text style={styles.title}>Log in to your account</Text>
-        {/* <Text style={styles.subtitle}>
+        {/* <Text style={stylkes.subtitle}>
           Please provide the following information to seamlessly connect with us
         </Text> */}
 
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
-    color: '#B13E2A',
+    color: appColors.jazzred,
   },
   subtitle: {
     fontSize: 14,

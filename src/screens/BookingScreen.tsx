@@ -468,7 +468,7 @@ const { mutate: fetchAppointments } = useAppointments(); // Use your custom hook
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: appColors?.headerColor,
   },
   container2: {
     flex: 1,
@@ -478,7 +478,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#B13E2A',
+    color: appColors.jazzred,
     textAlign: 'center',
     marginBottom: 10,
   },
@@ -507,12 +507,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 30,
-    backgroundColor: appColors.jazzred,
+    backgroundColor: appColors.headerColor,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: "#FFF",
   },
   dropdownButton: {
     flexDirection: 'row',

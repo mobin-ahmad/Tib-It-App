@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 30,
-    backgroundColor: appColors.jazzred,
+    backgroundColor: appColors.headerColor,
   },
   // header: {
   //   flexDirection: 'row',
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#A33E39',
+    color: appColors?.jazzred,
     marginBottom: 10,
     marginTop:30,
   },
