@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#B13E2A',
+    color: appColors.jazzred,
     textAlign: 'center',
     marginBottom: 10,
   },

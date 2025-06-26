@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#A33E39',
+    color: appColors.jazzred,
     marginBottom: 10,
     marginTop: 30,
   },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   phoneNumber: {
     fontWeight: 'bold',
-    color: '#A33E39',
+    color: appColors.jazzred,
   },
   otpContainer: {
     paddingHorizontal: 20,
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     borderRadius: 10,
-    color: '#A33E39',
+    color: appColors.jazzred,
   },
   resendContainer: {
     alignItems: 'center',
@@ -222,10 +222,10 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   timer: {
-    color: '#A33E39',
+    color: appColors.jazzred,
   },
   resendLink: {
-    color: '#A33E39',
+    color: appColors.jazzred,
     fontSize: 16,
     fontWeight: 'bold',
   },

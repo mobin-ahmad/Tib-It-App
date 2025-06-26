@@ -1,6 +1,7 @@
 // components/StepIndicator.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import appColors from '../components/appcolors';
 
 const StepIndicator = ({ step }) => {
   const steps = ['Select Date', 'Select Doctor', 'Doctor Availability', 'Patient Details'];
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   activeCircle: {
-    backgroundColor: '#B71C1C',
+    backgroundColor: appColors.jazzred,
   },
   inactiveCircle: {
     backgroundColor: '#ccc',
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   activeLabel: {
-    color: '#B71C1C',
+    color: appColors.jazzred,
   },
   inactiveLabel: {
     color: '#ccc',

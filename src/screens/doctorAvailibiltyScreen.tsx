@@ -351,22 +351,22 @@ const styles = StyleSheet.create({
     color: appColors.jazzred,
   },
   doctorInfoContainer: { alignItems: 'center', padding: 15, backgroundColor: '#F5F5F5', borderRadius: 10, marginBottom: 15 },
-  profileIcon: { backgroundColor: '#B71C1C', padding: 30, borderRadius: 100, marginBottom: 10 },
+  profileIcon: { backgroundColor: appColors?.jazzred, padding: 30, borderRadius: 100, marginBottom: 10 },
   doctorName: { fontSize: 18, fontWeight: 'bold' },
   fee: { fontSize: 16, color: '#666' ,fontWeight: 'bold'},
 //   background: #82828233;
 
   dateSelectorContainer: {flexDirection: 'row',  alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
   date: {   marginHorizontal: 12 ,borderRadius: 5,padding:5 ,backgroundColor: '#82828233',fontWeight: 'bold',},
-  selectedDate: { backgroundColor: '#B71C1C' , fontWeight: 'bold', color:appColors.manclrwhite,borderRadius: 5,padding:5 },
+  selectedDate: { backgroundColor: appColors?.jazzred , fontWeight: 'bold', color:appColors.manclrwhite,borderRadius: 5,padding:5 },
 
   timeOfDayContainer: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10, borderBottomWidth: 1, borderColor: '#DDD', paddingBottom: 5 },
   timeOfDay: { fontSize: 16, color: '#666',fontWeight: 'bold' },
-  activeTimeOfDay: { color: '#B71C1C', fontWeight: 'bold', borderBottomWidth: 2, borderColor: '#B71C1C' },
+  activeTimeOfDay: { color: appColors?.jazzred, fontWeight: 'bold', borderBottomWidth: 2, borderColor: appColors?.jazzred },
 
   timesContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', marginVertical: 10 },
   timeSlot: { padding: 15, backgroundColor: '#82828233', borderRadius: 5, margin: 5, width: '40%', alignItems: 'center', },
-  selectedTimeSlot: { backgroundColor: '#B71C1C' },
+  selectedTimeSlot: { backgroundColor: appColors?.jazzred },
   timeText: { fontSize: 16, color: '#333',fontWeight: 'bold' },
   selectedTimeText: { fontSize: 16, color: '#FFF',fontWeight: 'bold' },
   icon: {
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   doctorInfoContainer2: { backgroundColor: '#F5F5F5',  },
 
 
-  nextButton: { backgroundColor: '#B71C1C', padding: 15, alignItems: 'center', borderRadius: 8, marginTop: 30 },
+  nextButton: { backgroundColor: appColors?.jazzred, padding: 15, alignItems: 'center', borderRadius: 8, marginTop: 30 },
   nextButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
 });
 

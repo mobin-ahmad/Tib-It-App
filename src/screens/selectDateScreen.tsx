@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   nextButton: {
-    backgroundColor: '#B71C1C',
+    backgroundColor: appColors.jazzred,
     padding: 15,
     marginHorizontal:25,
     marginBottom:10,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 40, // Adjust the height to match the selected date area
-    backgroundColor: 'rgba(183, 28, 28, 0.2)', // Red color with opacity
+    backgroundColor: appColors.jazzred,
     zIndex: -1, // Ensure it doesn’t cover the picker
   },
 

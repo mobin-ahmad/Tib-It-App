@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#A33E39",
+    color: appColors?.jazzred,
     marginBottom: 10,
   },
   subHeader: {

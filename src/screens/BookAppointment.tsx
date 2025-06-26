@@ -165,8 +165,8 @@ const AppointmentScreen = () => {
           [selectedDate]: { selected: true, selectedColor: appColors.jazzred, },
         }}
         theme={{
-          todayTextColor: '#B50000',
-          arrowColor: '#B50000',
+          todayTextColor: appColors.jazzred,
+          arrowColor: appColors.jazzred,
         }}
       />
 
@@ -229,22 +229,22 @@ const AppointmentScreen = () => {
   <View style={styles.radioRow}>
     <RadioButton 
       value="self" 
-      color={cnicOf === "self" ? "red" : undefined} 
+      color={cnicOf === "self" ? appColors.jazzred : undefined} 
     />
     <Text>Self</Text>
     <RadioButton 
       value="father" 
-      color={cnicOf === "father" ? "red" : undefined} 
+      color={cnicOf === "father" ? appColors.jazzred : undefined} 
     />
     <Text>Father</Text>
     <RadioButton 
       value="mother" 
-      color={cnicOf === "mother" ? "red" : undefined} 
+      color={cnicOf === "mother" ? appColors.jazzred : undefined} 
     />
     <Text>Mother</Text>
     <RadioButton 
       value="guardian" 
-      color={cnicOf === "guardian" ? "red" : undefined} 
+      color={cnicOf === "guardian" ? appColors.jazzred : undefined} 
     />
     <Text>Guardian</Text>
   </View>
@@ -262,12 +262,12 @@ const AppointmentScreen = () => {
       <RadioButton.Group onValueChange={setGender} value={gender}>
         <View style={styles.radioRow}>
           <RadioButton value="Male" 
-           color={gender === "Male" ? "red" : undefined} 
+           color={gender === "Male" ? appColors.jazzred : undefined} 
           />
           <Text>Male</Text>
           
           <RadioButton value="Female" 
-           color={gender === "Female" ? "red" : undefined} 
+           color={gender === "Female" ? appColors.jazzred : undefined} 
           />
           <Text>Female</Text>
         </View>

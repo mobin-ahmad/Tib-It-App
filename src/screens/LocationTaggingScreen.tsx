@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     marginTop:20,
-    color: '#B13E2A',
+    color: appColors?.jazzred,
   },
   subheading: {
     fontSize: 14,
@@ -144,13 +144,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   selectCityButton: {
-    backgroundColor: '#F2BB44',
+    backgroundColor: appColors.jazzred,
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 8,
   },
   buttonText: {
-    color: '#000',
+    color: '#fff',
     fontSize: 16,
     textAlign: 'center',
   },

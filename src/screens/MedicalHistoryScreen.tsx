@@ -677,7 +677,7 @@
         title: {
           fontSize: 22,
           fontWeight: 'bold',
-          color: '#B13E2A',
+          color: appColors.jazzred,
           textAlign: 'center',
           marginBottom: 10,
         },
@@ -760,7 +760,7 @@
           elevation: 3,
         },
         iconWrapper: {
-          backgroundColor: '#B13E2A',
+          backgroundColor: appColors.jazzred,
           padding: 10,
           borderRadius: 8,
           marginRight: 10,
@@ -782,7 +782,7 @@
           color: '#000', // Black color for values
         },
         viewDetailsBtn: {
-          backgroundColor: '#B13E2A',
+          backgroundColor: appColors.jazzred,
           paddingVertical: 6,
           paddingHorizontal: 12,
           alignItems: 'center',
