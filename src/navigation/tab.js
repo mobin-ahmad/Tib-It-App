@@ -183,7 +183,7 @@ const TabsScreen = () => (
 const TabBarIcon = ({ icon, label, focused }) => (
   <View style={styles.iconContainer}>
     {focused && <View style={styles.spotlight} />}
-    <Image source={icon} style={[styles.icon, { tintColor: focused ? '#B71C1C' : '#888' }]} />
+    <Image source={icon} style={[styles.icon, { tintColor: focused ? appColors?.jazzred : '#888' }]} />
     <Text style={[styles.iconLabel, focused && styles.focusedLabel]}>{label}</Text>
   </View>
 );
