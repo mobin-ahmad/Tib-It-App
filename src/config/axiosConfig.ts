@@ -6,7 +6,8 @@ import { logout, setToken } from "../store/slices/auth";
 // console.log("asdasdsadsadasd",API_URL);
 // console.log(API_KEY);
 
-const serverUrl ='https://api.tibbit.garajcloud.com/'
+// const serverUrl ='https://api.tibbit.garajcloud.com/'
+const serverUrl ='https://tibbit.visionplus.com.pk/'
 
 export const api = axios.create({
   baseURL: serverUrl,

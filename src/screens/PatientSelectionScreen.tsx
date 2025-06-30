@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedCard: {
-    borderColor: "#A33E39",
+    borderColor: appColors?.jazzred,
     borderWidth: 2,
   },
   cardContent: {
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   //   alignItems: "center",
   // },
   radioSelected: {
-    backgroundColor: "#A33E39",
+    backgroundColor: appColors.jazzred,
     height: 10,
     width: 10,
     borderRadius: 5,
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "#D32F2F",
+    borderColor: appColors.jazzred,
     marginRight: 5,
   },
 
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   radioButtonSelected: {
-    backgroundColor: "#D32F2F",
+    backgroundColor: appColors.jazzred,
   },
   genderText: {
     alignItems: "flex-start",
