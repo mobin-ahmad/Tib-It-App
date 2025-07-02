@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     marginBottom: 80,
   },
   buttonText: {
-    color: '#fff',
+    color: appColors?.Btnblack,
     fontSize: 16,
     textAlign: 'center',
   },

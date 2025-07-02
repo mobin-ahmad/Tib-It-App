@@ -422,7 +422,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: appColors?.Btnblack,
   },
   
   modalContent: {

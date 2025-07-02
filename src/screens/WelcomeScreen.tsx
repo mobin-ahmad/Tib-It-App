@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,  // Positioning button near the bottom with some margin
   },
   buttonText: {
-    color: '#fff',
+    color: appColors?.Btnblack,
     fontSize: 16,
   },
 });

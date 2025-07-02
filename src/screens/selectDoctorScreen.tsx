@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   icon: { height: 40, color: appColors.Btnblack },
   header2: { flexDirection: 'row', alignItems: 'center', paddingVertical: 20, marginHorizontal: 20 },
   nextButton: { backgroundColor: appColors?.jazzred, padding: 15, marginHorizontal: 25, marginBottom: 10, alignItems: 'center', borderRadius: 8, marginTop: 'auto' },
-  nextButtonText: { color: '#fff', fontSize: 16 },
+  nextButtonText: { color: appColors.Btnblack, fontSize: 16 },
 });
 
 export default SelectDoctorScreen;

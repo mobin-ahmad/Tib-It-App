@@ -11,7 +11,7 @@ const StepIndicator = ({ step }) => {
       {steps.map((label, index) => (
         <View key={index} style={styles.stepContainer}>
           <View style={[styles.circle, step === index + 1 ? styles.activeCircle : styles.inactiveCircle]}>
-            <Text style={styles.circleText}>{index + 1}</Text>
+            <Text style={[styles.label, step === index + 1 ? styles.circleText : styles.circleText1]}>{index + 1}</Text>
           </View>
           <Text style={[styles.label, step === index + 1 ? styles.activeLabel : styles.inactiveLabel]}>
             {label}
@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   circleText: {
+    color: appColors?.Btnblack,
+    fontWeight: 'bold',
+  },
+  circleText1: {
     color: '#fff',
     fontWeight: 'bold',
   },

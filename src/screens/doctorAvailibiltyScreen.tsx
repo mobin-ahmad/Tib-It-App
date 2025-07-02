@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
 
 
   nextButton: { backgroundColor: appColors?.jazzred, padding: 15, alignItems: 'center', borderRadius: 8, marginTop: 30 },
-  nextButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  nextButtonText: { color: appColors.Btnblack, fontSize: 16, fontWeight: 'bold' },
 });
 
 export default DoctorAvailabilityScreen;

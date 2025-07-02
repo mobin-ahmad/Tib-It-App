@@ -711,7 +711,7 @@
         headerTitle: {
           fontSize: 18,
           fontWeight: 'bold',
-          color: '#FFFFFF',
+          color:appColors?.Btnblack,
         },
         dropdownButton: {
           flexDirection: 'row',

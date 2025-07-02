@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     marginTop: 'auto', // Push button to the bottom
   },
   nextButtonText: {
-    color: '#fff',
+    color: appColors.Btnblack,
     fontSize: 16,
   },
   icon: {

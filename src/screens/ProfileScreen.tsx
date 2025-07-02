@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeButtonText: {
-    color: '#fff',
+    color: appColors?.Btnblack,
     fontSize: 16,
   },
   menuContainer: {

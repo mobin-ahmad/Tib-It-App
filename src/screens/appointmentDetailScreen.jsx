@@ -157,7 +157,11 @@ const CustomDropdown = ({ label, data, onSelect }) => {
 
 
 const AppointmentDetailScreen = ({ route, navigation }) => {
-  const { formattedDate, selectedDoctor, selectedTime,selectedHospital } = route.params;
+  // const { formattedDate, selectedDoctor, selectedTime,selectedHospital } = route.params;
+  const formattedDate = ""
+  const selectedDoctor = ""
+  const selectedTime = ""
+  const selectedHospital = ""
   // const [selectedHospital, setSelectedHospital] = useState('');
   const [gender, setGender] = useState(null);
 
@@ -365,7 +369,7 @@ const AppointmentDetailScreen = ({ route, navigation }) => {
           <CheckBox
             value={termsAccepted}
             onValueChange={setTermsAccepted}
-            tintColors={{ true: '#B13E2A', false: '#333' }}
+            tintColors={{ true: appColors.jazzred, false: '#333' }}
           />
           <Text style={styles.checkboxText}>I have accepted the <Text style={styles.termsText}>Terms & Conditions</Text></Text>
         </View>
@@ -407,7 +411,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 8,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: appColors.jazzred,
   },
 
   dropdownContainer: {
@@ -467,13 +471,13 @@ fontWeight:'bold',
   },
   closeButton: {
     marginTop: 15,
-    backgroundColor: '#B71C1C',
+    backgroundColor: appColors.jazzred,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
   },
   closeButtonText: {
-    color: '#fff',
+    color: appColors.Btnblack,
     fontSize: 16,
   },
   sectionTitle: {
@@ -531,7 +535,7 @@ fontWeight:'bold',
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
-    color: '#B13E2A',
+    color: appColors.jazzred,
   },
   radioLabel: {
     fontSize: 12,
@@ -551,15 +555,15 @@ fontWeight:'bold',
     fontSize: 16,
   },
   optionalInput: {  },
-  prescriptionLabel: { fontSize: 16, color: '#B71C1C', marginVertical: 20, fontWeight: 'bold' },
+  prescriptionLabel: { fontSize: 16, color: appColors.jazzred, marginVertical: 20, fontWeight: 'bold' },
   uploadButton: {
-    backgroundColor: '#B71C1C',
+    backgroundColor: appColors.jazzred,
     padding: 10,
     alignItems: 'center',
     borderRadius: 8,
     marginVertical: 10,
   },
-  uploadButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  uploadButtonText: { color: appColors.Btnblack, fontSize: 16, fontWeight: 'bold' },
   fileItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -579,15 +583,15 @@ fontWeight:'bold',
     marginVertical: 10,
   },
   checkboxText: { fontSize: 14, color: '#333',marginHorizontal:12, },
-  termsText: { color: '#B71C1C', fontWeight: 'bold' },
+  termsText: { color: appColors.jazzred, fontWeight: 'bold' },
   nextButton: {
-    backgroundColor: '#B71C1C',
+    backgroundColor: appColors.jazzred,
     padding: 15,
     marginHorizontal: 5,
     alignItems: 'center',
     borderRadius: 8,
   },
-  confirmButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  confirmButtonText: { color: appColors.Btnblack, fontSize: 16, fontWeight: 'bold' },
 });
 
 export default AppointmentDetailScreen;

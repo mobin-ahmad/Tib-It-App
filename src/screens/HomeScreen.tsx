@@ -664,7 +664,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   bookButtonText: {
-    color: 'white',
+    color:appColors?.Btnblack,
     marginLeft: 8,
     fontSize: 16,
     fontWeight: 'bold',

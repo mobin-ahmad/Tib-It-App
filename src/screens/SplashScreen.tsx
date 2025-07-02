@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
     marginLeft:50, // Add some space between the text and the logo
   },
   poweredLogo: {
-    width: 120, // Adjust the size of the powered logo
-    height: 50,
+    width: 180, // Adjust the size of the powered logo
+    height: 80,
     resizeMode: 'contain',
   },
 });
