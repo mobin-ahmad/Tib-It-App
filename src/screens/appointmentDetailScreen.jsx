@@ -157,11 +157,8 @@ const CustomDropdown = ({ label, data, onSelect }) => {
 
 
 const AppointmentDetailScreen = ({ route, navigation }) => {
-  // const { formattedDate, selectedDoctor, selectedTime,selectedHospital } = route.params;
-  const formattedDate = ""
-  const selectedDoctor = ""
-  const selectedTime = ""
-  const selectedHospital = ""
+  const { formattedDate, selectedDoctor, selectedTime,selectedHospital } = route.params;
+ 
   // const [selectedHospital, setSelectedHospital] = useState('');
   const [gender, setGender] = useState(null);
 

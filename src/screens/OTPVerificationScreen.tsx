@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: appColors?.Btnblack,
   },
   title: {
     fontSize: 24,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   verifyButtonText: {
-    color: '#FFFFFF',
+    color: appColors?.Btnblack,
     fontSize: 16,
     fontWeight: 'bold',
   },

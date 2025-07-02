@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   nextButtonText: {
-    color: "#FFFFFF",
+    color: appColors?.Btnblack,
     fontSize: 16,
     fontWeight: "bold",
   },
